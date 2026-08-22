@@ -1,0 +1,73 @@
+@theme {
+  /* Color — 品牌色 */
+  --color-yr-purple: #6B0086;
+  --color-yr-purple-dark: #4A005E;
+  --color-yr-purple-light: #9B62B2;
+  --color-yr-purple-bg: #EAE2EF;
+  --color-yr-yellow: #FFD400;
+  --color-yr-yellow-light: #FFF8D0;
+
+  /* Color — 背景 */
+  --color-yr-bg: #ECE9D8;
+  --color-yr-panel-bg: #F4F3ED;
+  --color-yr-white: #FFFFFF;
+
+  /* Color — 邊框 */
+  --color-yr-border: #9D9DA1;
+  --color-yr-border-light: #D4D0C8;
+
+  /* Color — 語義色 */
+  --color-yr-highlight: #316AC5;
+  --color-yr-hover-bg: #FFEBB5;
+
+  /* Color — 文字 */
+  --color-yr-text-dark: #222222;
+  --color-yr-text-light: #666666;
+  --color-yr-text-link: #0044BB;
+
+  /* Color — 狀態 */
+  --color-yr-status-available: #4CAF50;
+  --color-yr-status-busy: #F44336;
+  --color-yr-status-away: #FFC107;
+  --color-yr-status-offline: #BDBDBD;
+
+  /* Typography */
+  --font-yr: 'Segoe UI', Tahoma, 'PMingLiU', '新細明體', Arial, sans-serif;
+  --text-yr-xs: 10px;
+  --text-yr-sm: 11px;
+  --text-yr-base: 12px;
+  --text-yr-md: 13px;
+  --text-yr-lg: 14px;
+  --text-yr-xl: 16px;
+
+  /* Spacing */
+  --spacing-yr-0\.5: 2px;
+  --spacing-yr-1: 4px;
+  --spacing-yr-1\.5: 6px;
+  --spacing-yr-2: 8px;
+  --spacing-yr-2\.5: 10px;
+  --spacing-yr-3: 12px;
+  --spacing-yr-4: 16px;
+  --spacing-yr-5: 20px;
+  --spacing-yr-6: 24px;
+  --spacing-yr-8: 32px;
+
+  /* Border Radius */
+  --radius-yr-sm: 2px;
+  --radius-yr-md: 3px;
+  --radius-yr-lg: 4px;
+  --radius-yr-xl: 6px;
+
+  /* Shadow */
+  --shadow-yr-window: 0 8px 24px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.2);
+  --shadow-yr-button: inset 0 1px 0 #FFF, 0 1px 2px rgba(0, 0, 0, 0.15);
+  --shadow-yr-inset: inset 1px 1px 3px rgba(0, 0, 0, 0.12);
+  --shadow-yr-control: inset 1px 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+:root {
+  --yr-gradient-titlebar: linear-gradient(to bottom, #9453AD 0%, #68007E 45%, #520063 100%);
+  --yr-gradient-button: linear-gradient(to bottom, #FFFFFF 0%, #F3F3F3 50%, #EBEBEB 51%, #DDDDDD 100%);
+  --yr-gradient-button-close: linear-gradient(to bottom, #F4826B 0%, #E83F21 50%, #D81C03 51%, #ED4C34 100%);
+  --yr-gradient-toolbar: linear-gradient(to bottom, #F4F3EE 0%, #E0DED7 100%);
+}
