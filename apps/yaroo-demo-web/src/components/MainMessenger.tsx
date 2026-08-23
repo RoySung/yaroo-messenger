@@ -5,13 +5,14 @@ import { Window, WindowHeader, Avatar, StatusBadge, Toolbar, MenuBar, Select, us
 interface MainMessengerProps {
   user: User;
   onOpenChat: (contact: User) => void;
+  onRequestBuzz: (contact: User) => void;
   onUpdateUser: (updatedData: Partial<User>) => void;
   zIndex?: number;
   onFocus: () => void;
   initialPosition?: { x: number; y: number };
 }
 
-export const MainMessenger = ({ user, onOpenChat, onUpdateUser, zIndex = 10, onFocus, initialPosition }: MainMessengerProps) => {
+export const MainMessenger = ({ user, onOpenChat, onRequestBuzz, onUpdateUser, zIndex = 10, onFocus, initialPosition }: MainMessengerProps) => {
   const defaultInitialPos = typeof window !== 'undefined'
     ? { x: Math.max(20, window.innerWidth - 340), y: 40 }
     : { x: 800, y: 40 };
@@ -91,11 +92,63 @@ export const MainMessenger = ({ user, onOpenChat, onUpdateUser, zIndex = 10, onF
 
       <MenuBar 
         items={[
-          { label: '即時通(M)' },
-          { label: '聯絡人(C)' },
-          { label: '動作(A)' },
-          { label: '說明(H)' }
-        ]} 
+          {
+            label: '即時通(M)',
+            items: [
+              { label: '線上 (Available)', icon: '🟢', onClick: () => { setCurrentPresence('available'); onUpdateUser?.({ status: 'available' }); } },
+              { label: '忙碌 (Busy)', icon: '🔴', onClick: () => { setCurrentPresence('busy'); onUpdateUser?.({ status: 'busy' }); } },
+              { label: '馬上回來 (Be Right Back)', icon: '🟡', onClick: () => { setCurrentPresence('away'); onUpdateUser?.({ status: 'away' }); } },
+              { label: '隱藏 (Invisible)', icon: '⚪', onClick: () => { setCurrentPresence('invisible'); onUpdateUser?.({ status: 'invisible' }); } },
+              { divider: true },
+              { label: '變更顯示圖片...', disabled: true },
+              { label: '個人喜好設定(P)...', disabled: true }
+            ]
+          },
+          {
+            label: '聯絡人(C)',
+            items: [
+              { label: '新增聯絡人(A)...', icon: '➕', disabled: true },
+              { label: '搜尋聯絡人(S)...', icon: '🔍', disabled: true },
+              { divider: true },
+              { label: '顯示離線聯絡人', disabled: true }
+            ]
+          },
+          {
+            label: '動作(A)',
+            items: [
+              {
+                label: '傳送叮咚 (Buzz)',
+                icon: '🔔',
+                shortcut: 'Ctrl+G',
+                onClick: () => {
+                  const firstOnline = contacts.flatMap(g => g.users).find(u => u.status === 'available');
+                  if (firstOnline) {
+                    onRequestBuzz(firstOnline);
+                  }
+                }
+              },
+              {
+                label: '傳送即時訊息(M)...',
+                icon: '✉️',
+                onClick: () => {
+                  const firstOnline = contacts.flatMap(g => g.users).find(u => u.status === 'available');
+                  if (firstOnline) {
+                    onOpenChat(firstOnline);
+                  }
+                }
+              },
+              { label: '傳送檔案(F)...', icon: '📁', disabled: true }
+            ]
+          },
+          {
+            label: '說明(H)',
+            items: [
+              { label: 'Yaroo! 即時通說明(H)', disabled: true },
+              { divider: true },
+              { label: '關於 Yaroo! 即時通(A)', disabled: true }
+            ]
+          }
+        ]}
       />
 
       {/* User Profile Card */}

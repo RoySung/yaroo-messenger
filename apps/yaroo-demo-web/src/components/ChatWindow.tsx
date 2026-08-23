@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { User, chatHistory as initialChatHistory } from '../mockData';
-import { Window, WindowHeader, Avatar, Toolbar, XpButton, TextArea, useDraggable } from '@yaroo/ui';
+import { Window, WindowHeader, Avatar, Toolbar, MenuBar, XpButton, TextArea, useDraggable } from '@yaroo/ui';
 
 interface ChatWindowProps {
   contact: User;
@@ -9,6 +9,8 @@ interface ChatWindowProps {
   zIndex?: number;
   onFocus: () => void;
   initialPosition?: { x: number; y: number };
+  buzzRequest?: { id: number; contactId: string } | null;
+  onBuzzHandled?: (requestId: number) => void;
 }
 
 // Module-level shared AudioContext singleton
@@ -30,7 +32,27 @@ const getAudioContext = (): AudioContext | null => {
   }
 };
 
-export const ChatWindow = ({ contact, user, onClose, zIndex = 11, onFocus, initialPosition }: ChatWindowProps) => {
+interface ActionBtnProps {
+  icon: string;
+  text: string;
+  onClick?: () => void;
+  isBuzz?: boolean;
+}
+
+// Keep this component stable across ChatWindow re-renders. The window focuses on
+// mouse down, so declaring it inside ChatWindow would remount the button before
+// its click event is dispatched.
+const ActionBtn = ({ icon, text, onClick, isBuzz = false }: ActionBtnProps) => (
+  <button
+    onClick={onClick}
+    className={`bg-transparent border border-transparent flex items-center gap-[4px] px-[7px] py-[3px] text-yr-sm rounded-[3px] transition-all duration-100 hover:bg-[linear-gradient(to_bottom,#FFFFFF_0%,#E8E4D8_100%)] hover:border-[#707070] hover:shadow-[0_1px_2px_rgba(0,0,0,0.1)] active:bg-[#D4D0C8] active:shadow-[inset_1px_1px_2px_rgba(0,0,0,0.2)] ${isBuzz ? 'text-[#B00000] font-bold' : 'text-yr-text-dark'}`}
+  >
+    <span className="text-[14px]">{icon}</span>
+    <span className="font-medium">{text}</span>
+  </button>
+);
+
+export const ChatWindow = ({ contact, user, onClose, zIndex = 11, onFocus, initialPosition, buzzRequest, onBuzzHandled }: ChatWindowProps) => {
   const { position, handleMouseDown } = useDraggable({
     initialPosition: initialPosition || { x: 370, y: 40 },
     onFocus
@@ -41,11 +63,7 @@ export const ChatWindow = ({ contact, user, onClose, zIndex = 11, onFocus, initi
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const historyRef = useRef<HTMLDivElement>(null);
 
-  const currentUserData = user || {
-    id: 'roy666',
-    nickname: '羅伊 ฅ^•ﻌ•^ฅ',
-    avatar: '/avatars/cat_roy.svg'
-  };
+  const currentUserData = user;
 
   const quickEmojis = [
     '(｡･ω･｡)', '(≧∇≦)', '(◕‿◕✿)', '(´;ω;`)',
@@ -132,7 +150,7 @@ export const ChatWindow = ({ contact, user, onClose, zIndex = 11, onFocus, initi
     }
   };
 
-  const triggerShake = () => {
+  const triggerShake = useCallback(() => {
     const el = windowRef.current || document.getElementById(`chat-window-${contact.id}`);
     if (el) {
       el.animate([
@@ -151,7 +169,7 @@ export const ChatWindow = ({ contact, user, onClose, zIndex = 11, onFocus, initi
         easing: 'ease-in-out'
       });
     }
-  };
+  }, [contact.id]);
 
   const handleSend = () => {
     if (!inputText.trim()) return;
@@ -193,7 +211,7 @@ export const ChatWindow = ({ contact, user, onClose, zIndex = 11, onFocus, initi
     }
   };
 
-  const handleBuzz = () => {
+  const handleBuzz = useCallback(() => {
     playDingDong();
     triggerShake();
 
@@ -228,22 +246,19 @@ export const ChatWindow = ({ contact, user, onClose, zIndex = 11, onFocus, initi
         ]);
       }, 1200);
     }
-  };
+  }, [contact, currentUserData, triggerShake]);
+
+  useEffect(() => {
+    if (!buzzRequest || buzzRequest.contactId !== contact.id) return;
+
+    handleBuzz();
+    onBuzzHandled?.(buzzRequest.id);
+  }, [buzzRequest, contact.id, handleBuzz, onBuzzHandled]);
 
   const handleInsertEmoji = (emoji: string) => {
     setInputText(prev => prev + ' ' + emoji + ' ');
     setShowEmojiPicker(false);
   };
-
-  const ActionBtn = ({ icon, text, onClick, isBuzz = false }: { icon: string, text: string, onClick?: () => void, isBuzz?: boolean }) => (
-    <button 
-      onClick={onClick}
-      className={`bg-transparent border border-transparent flex items-center gap-[4px] px-[7px] py-[3px] text-yr-sm rounded-[3px] transition-all duration-100 hover:bg-[linear-gradient(to_bottom,#FFFFFF_0%,#E8E4D8_100%)] hover:border-[#707070] hover:shadow-[0_1px_2px_rgba(0,0,0,0.1)] active:bg-[#D4D0C8] active:shadow-[inset_1px_1px_2px_rgba(0,0,0,0.2)] ${isBuzz ? 'text-[#B00000] font-bold' : 'text-yr-text-dark'}`}
-    >
-      <span className="text-[14px]">{icon}</span>
-      <span className="font-medium">{text}</span>
-    </button>
-  );
 
   return (
     <Window 
@@ -265,6 +280,44 @@ export const ChatWindow = ({ contact, user, onClose, zIndex = 11, onFocus, initi
         onMinimize={() => {}}
         onMaximize={() => {}}
         onClose={onClose}
+      />
+
+      {/* Menu Bar */}
+      <MenuBar
+        items={[
+          {
+            label: '交談(C)',
+            items: [
+              { label: '儲存交談記錄(S)...', disabled: true },
+              { divider: true },
+              { label: '關閉(C)', onClick: onClose, shortcut: 'Alt+F4' }
+            ]
+          },
+          {
+            label: '動作(A)',
+            items: [
+              { label: '傳送叮咚 (Buzz)', icon: '🔔', onClick: handleBuzz, shortcut: 'Ctrl+G' },
+              { divider: true },
+              { label: '語音通話', icon: '📞', disabled: true },
+              { label: '視訊通話', icon: '📹', disabled: true },
+              { label: '傳送檔案...', icon: '📁', disabled: true },
+              { label: '傳送照片...', icon: '🖼️', disabled: true }
+            ]
+          },
+          {
+            label: '檢視(V)',
+            items: [
+              { label: '即時通狀態資訊', disabled: true },
+              { label: '顯示聯絡人資訊', disabled: true }
+            ]
+          },
+          {
+            label: '說明(H)',
+            items: [
+              { label: '交談說明(H)', disabled: true }
+            ]
+          }
+        ]}
       />
 
       {/* Action Toolbar */}
