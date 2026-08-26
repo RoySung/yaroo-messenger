@@ -21,6 +21,7 @@ export default defineConfig({
     ],
   },
   server: {
+    allowedHosts: ['.ngrok-free.app'],
     watch: {
       ignored: ['!**/packages/ui/**'],
     },

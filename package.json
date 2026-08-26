@@ -4,8 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "pnpm --filter @yaroo/demo-web dev",
+    "dev:demo": "pnpm --filter @yaroo/demo-web dev",
+    "dev:chat": "pnpm --filter @yaroo/chat dev",
+    "start:chat": "pnpm --filter @yaroo/chat start",
     "build": "pnpm -r build",
     "lint": "oxlint"
+  },
+  "devDependencies": {
+    "oxlint": "^1.79.0"
   }
 }
