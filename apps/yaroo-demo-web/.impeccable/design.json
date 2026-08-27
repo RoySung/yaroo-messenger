@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-27T09:03:59Z",
+  "title": "Design System: Yaroo! Messenger Demo",
+  "extensions": {
+    "colorMeta": {
+      "yaroo-purple": { "role": "primary", "displayName": "Messenger Purple", "canonical": "#6B0086", "tonalRamp": ["oklch(15% 0.18 315)", "oklch(25% 0.18 315)", "oklch(35% 0.18 315)", "oklch(45% 0.18 315)", "oklch(58% 0.15 315)", "oklch(70% 0.11 315)", "oklch(83% 0.06 315)", "oklch(95% 0.02 315)"] },
+      "yaroo-purple-dark": { "role": "primary", "displayName": "Deep Titlebar Purple", "canonical": "#4A005E", "tonalRamp": ["oklch(15% 0.15 315)", "oklch(25% 0.15 315)", "oklch(35% 0.15 315)", "oklch(45% 0.14 315)", "oklch(58% 0.11 315)", "oklch(70% 0.08 315)", "oklch(83% 0.04 315)", "oklch(95% 0.01 315)"] },
+      "yaroo-purple-light": { "role": "primary", "displayName": "Soft Messenger Purple", "canonical": "#9B62B2", "tonalRamp": ["oklch(15% 0.10 315)", "oklch(25% 0.10 315)", "oklch(35% 0.10 315)", "oklch(45% 0.10 315)", "oklch(58% 0.09 315)", "oklch(70% 0.07 315)", "oklch(83% 0.04 315)", "oklch(95% 0.01 315)"] },
+      "yaroo-purple-bg": { "role": "primary", "displayName": "Soft Purple Panel", "canonical": "#EAE2EF", "tonalRamp": ["oklch(15% 0.03 315)", "oklch(25% 0.03 315)", "oklch(35% 0.03 315)", "oklch(45% 0.03 315)", "oklch(58% 0.025 315)", "oklch(70% 0.02 315)", "oklch(83% 0.015 315)", "oklch(95% 0.008 315)"] },
+      "yaroo-yellow": { "role": "secondary", "displayName": "Yaroo Signal Yellow", "canonical": "#FFD400", "tonalRamp": ["oklch(15% 0.16 95)", "oklch(25% 0.16 95)", "oklch(35% 0.16 95)", "oklch(45% 0.16 95)", "oklch(58% 0.16 95)", "oklch(70% 0.15 95)", "oklch(83% 0.11 95)", "oklch(95% 0.04 95)"] },
+      "yaroo-yellow-light": { "role": "secondary", "displayName": "Soft Signal Yellow", "canonical": "#FFF8D0", "tonalRamp": ["oklch(15% 0.06 95)", "oklch(25% 0.06 95)", "oklch(35% 0.06 95)", "oklch(45% 0.06 95)", "oklch(58% 0.05 95)", "oklch(70% 0.04 95)", "oklch(83% 0.03 95)", "oklch(95% 0.02 95)"] },
+      "window-bg": { "role": "neutral", "displayName": "Window Warm Gray", "canonical": "#ECE9D8", "tonalRamp": ["oklch(15% 0.02 95)", "oklch(25% 0.02 95)", "oklch(35% 0.02 95)", "oklch(45% 0.018 95)", "oklch(58% 0.016 95)", "oklch(70% 0.014 95)", "oklch(83% 0.012 95)", "oklch(95% 0.008 95)"] },
+      "panel-bg": { "role": "neutral", "displayName": "Panel Ivory Gray", "canonical": "#F4F3ED", "tonalRamp": ["oklch(15% 0.012 95)", "oklch(25% 0.012 95)", "oklch(35% 0.012 95)", "oklch(45% 0.011 95)", "oklch(58% 0.010 95)", "oklch(70% 0.009 95)", "oklch(83% 0.008 95)", "oklch(95% 0.005 95)"] },
+      "white": { "role": "neutral", "displayName": "Content White", "canonical": "#FFFFFF", "tonalRamp": ["#262626", "#404040", "#595959", "#737373", "#949494", "#B8B8B8", "#DADADA", "#F2F2F2"] },
+      "border": { "role": "neutral", "displayName": "Structural Gray", "canonical": "#9D9DA1", "tonalRamp": ["#242426", "#3B3B3E", "#535356", "#6C6C70", "#858589", "#A1A1A5", "#C2C2C5", "#EEEEEF"] },
+      "border-light": { "role": "neutral", "displayName": "Light Divider", "canonical": "#D4D0C8", "tonalRamp": ["#282622", "#403D38", "#58544D", "#716C63", "#8D877B", "#AAA397", "#CAC4B9", "#F1EEE8"] },
+      "highlight": { "role": "secondary", "displayName": "XP Selection Blue", "canonical": "#316AC5", "tonalRamp": ["oklch(15% 0.13 255)", "oklch(25% 0.13 255)", "oklch(35% 0.13 255)", "oklch(45% 0.13 255)", "oklch(58% 0.12 255)", "oklch(70% 0.09 255)", "oklch(83% 0.05 255)", "oklch(95% 0.015 255)"] },
+      "hover-bg": { "role": "secondary", "displayName": "Warm Hover Highlight", "canonical": "#FFEBB5", "tonalRamp": ["oklch(15% 0.08 85)", "oklch(25% 0.08 85)", "oklch(35% 0.08 85)", "oklch(45% 0.08 85)", "oklch(58% 0.07 85)", "oklch(70% 0.06 85)", "oklch(83% 0.045 85)", "oklch(95% 0.02 85)"] },
+      "text-dark": { "role": "neutral", "displayName": "Ink Black", "canonical": "#222222", "tonalRamp": ["#262626", "#3D3D3D", "#555555", "#6E6E6E", "#898989", "#A7A7A7", "#C9C9C9", "#EFEFEF"] },
+      "text-light": { "role": "neutral", "displayName": "Secondary Gray", "canonical": "#666666", "tonalRamp": ["#262626", "#3D3D3D", "#555555", "#6E6E6E", "#898989", "#A7A7A7", "#C9C9C9", "#EFEFEF"] },
+      "text-link": { "role": "secondary", "displayName": "Desktop Link Blue", "canonical": "#0044BB", "tonalRamp": ["oklch(15% 0.14 260)", "oklch(25% 0.14 260)", "oklch(35% 0.14 260)", "oklch(45% 0.14 260)", "oklch(58% 0.12 260)", "oklch(70% 0.09 260)", "oklch(83% 0.05 260)", "oklch(95% 0.015 260)"] },
+      "status-available": { "role": "tertiary", "displayName": "Presence Green", "canonical": "#4CAF50", "tonalRamp": ["oklch(15% 0.11 145)", "oklch(25% 0.11 145)", "oklch(35% 0.11 145)", "oklch(45% 0.11 145)", "oklch(58% 0.10 145)", "oklch(70% 0.08 145)", "oklch(83% 0.05 145)", "oklch(95% 0.015 145)"] },
+      "status-busy": { "role": "tertiary", "displayName": "Busy Red", "canonical": "#F44336", "tonalRamp": ["oklch(15% 0.15 28)", "oklch(25% 0.15 28)", "oklch(35% 0.15 28)", "oklch(45% 0.15 28)", "oklch(58% 0.13 28)", "oklch(70% 0.10 28)", "oklch(83% 0.06 28)", "oklch(95% 0.02 28)"] },
+      "status-away": { "role": "tertiary", "displayName": "Away Amber", "canonical": "#FFC107", "tonalRamp": ["oklch(15% 0.15 80)", "oklch(25% 0.15 80)", "oklch(35% 0.15 80)", "oklch(45% 0.15 80)", "oklch(58% 0.14 80)", "oklch(70% 0.12 80)", "oklch(83% 0.08 80)", "oklch(95% 0.025 80)"] },
+      "status-offline": { "role": "tertiary", "displayName": "Offline Gray", "canonical": "#BDBDBD", "tonalRamp": ["#262626", "#3F3F3F", "#585858", "#727272", "#8D8D8D", "#AAAAAA", "#CACACA", "#EFEFEF"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Compact Display", "purpose": "Logo-adjacent labels and mobile page names." },
+      "headline": { "displayName": "Section Headline", "purpose": "Contact groups and important status." },
+      "title": { "displayName": "XP Window Title", "purpose": "Titlebars and primary controls." },
+      "body": { "displayName": "Desktop Body", "purpose": "Dense desktop chrome; mobile content overrides to at least 16px." },
+      "label": { "displayName": "Chrome Label", "purpose": "Menus, toolbars, and timestamps only." }
+    },
+    "shadows": [
+      { "name": "desktop-window", "value": "0 8px 24px rgba(0,0,0,0.35), 0 2px 6px rgba(0,0,0,0.2)", "purpose": "Raises draggable desktop windows; removed in mobile fullscreen mode." },
+      { "name": "raised-control", "value": "inset 0 1px 0 #fff, 0 1px 2px rgba(0,0,0,0.15)", "purpose": "Shows an XP control at rest." },
+      { "name": "recessed-field", "value": "inset 1px 1px 3px rgba(0,0,0,0.12)", "purpose": "Shows text fields and message history as recessed surfaces." },
+      { "name": "pressed-control", "value": "inset 1px 1px 2px rgba(0,0,0,0.15)", "purpose": "Shows pressed state without decorative motion." }
+    ],
+    "motion": [
+      { "name": "state-fast", "value": "150ms ease-out", "purpose": "Hover, focus, active, and menu state transitions." },
+      { "name": "buzz", "value": "500ms ease-in-out", "purpose": "Desktop-only Buzz shake; replace with static emphasis when reduced motion is requested." }
+    ],
+    "breakpoints": [
+      { "name": "mobile-portrait", "value": "767px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "XP Window",
+      "kind": "custom",
+      "refersTo": "titlebar",
+      "description": "The root surface: floating on desktop and viewport-filling on mobile portrait.",
+      "html": "<section class=\"ds-window\"><div class=\"ds-titlebar\"><strong>Yaroo! 即時通</strong><span>— □ ×</span></div><div class=\"ds-window-body\">Window content</div></section>",
+      "css": ".ds-window{width:300px;background:var(--color-yr-bg,#ECE9D8);border:1px solid var(--color-yr-purple-dark,#4A005E);border-radius:6px 6px 4px 4px;box-shadow:0 8px 24px rgba(0,0,0,.35),0 2px 6px rgba(0,0,0,.2);overflow:hidden;font:12px 'Segoe UI',Tahoma,sans-serif}.ds-titlebar{display:flex;justify-content:space-between;align-items:center;padding:4px 8px;color:#fff;background:linear-gradient(to bottom,#9453AD 0%,#68007E 45%,#520063 100%);border-bottom:1px solid #30004A}.ds-window-body{padding:12px}@media(max-width:767px){.ds-window{width:100%;min-height:100dvh;border-radius:0;box-shadow:none}}"
+    },
+    {
+      "name": "XP Default Button",
+      "kind": "button",
+      "refersTo": "button-default",
+      "description": "Tactile neutral action with raised and pressed states.",
+      "html": "<button class=\"ds-btn\">取消</button>",
+      "css": ".ds-btn{min-height:28px;padding:3px 16px;border:1px solid #707070;border-radius:3px;color:#000;background:linear-gradient(to bottom,#fff 0%,#f3f3f3 50%,#ebebeb 51%,#ddd 100%);box-shadow:inset 0 0 0 1px #e3e3e3,inset 0 1px 0 1px #fff;font:12px 'Segoe UI',Tahoma,sans-serif}.ds-btn:hover{filter:brightness(1.05)}.ds-btn:focus-visible{outline:1px solid #000;outline-offset:2px}.ds-btn:active{background:#EBEBEB;box-shadow:inset 1px 1px 2px rgba(0,0,0,.2)}@media(max-width:767px){.ds-btn{min-width:44px;min-height:44px;font-size:14px}}"
+    },
+    {
+      "name": "XP Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Primary action distinguished by a deep blue XP outline, not a modern filled pill.",
+      "html": "<button class=\"ds-btn-primary\">發送</button>",
+      "css": ".ds-btn-primary{min-height:28px;padding:3px 16px;border:2px solid #003C74;border-radius:3px;color:#000;background:linear-gradient(to bottom,#fff 0%,#f3f3f3 50%,#ebebeb 51%,#ddd 100%);box-shadow:inset 0 0 0 1px #e3e3e3,inset 0 1px 0 1px #fff;font:700 12px 'Segoe UI',Tahoma,sans-serif}.ds-btn-primary:hover{filter:brightness(1.05)}.ds-btn-primary:focus-visible{outline:1px solid #000;outline-offset:2px}.ds-btn-primary:active{background:#EBEBEB;box-shadow:inset 1px 1px 2px rgba(0,0,0,.2)}@media(max-width:767px){.ds-btn-primary{min-width:44px;min-height:44px;font-size:14px}}"
+    },
+    {
+      "name": "Recessed Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "White recessed field with a purple focus border.",
+      "html": "<input class=\"ds-input\" value=\"輸入訊息…\" aria-label=\"輸入訊息\">",
+      "css": ".ds-input{padding:2px 4px;border:1px solid #7F9DB9;border-radius:2px;background:#fff;color:#222;box-shadow:inset 1px 1px 2px rgba(0,0,0,.1);font:12px 'Segoe UI',Tahoma,sans-serif}.ds-input:hover{border-color:#6B0086}.ds-input:focus-visible{border-color:#6B0086;outline:2px solid rgba(107,0,134,.22);outline-offset:1px}@media(max-width:767px){.ds-input{min-height:44px;font-size:16px}}"
+    },
+    {
+      "name": "XP Menu Bar",
+      "kind": "nav",
+      "description": "Compact desktop-style command menu with blue selected state.",
+      "html": "<nav class=\"ds-menu\"><button>交談(C)</button><button class=\"is-active\">動作(A)</button><button>說明(H)</button></nav>",
+      "css": ".ds-menu{display:flex;padding:0 4px;background:#F4F3ED;border-bottom:1px solid #fff;font:11px 'Segoe UI',Tahoma,sans-serif}.ds-menu button{min-height:22px;padding:2px 6px;border:0;background:transparent;color:#222}.ds-menu button:hover,.ds-menu button.is-active{background:#316AC5;color:#fff}.ds-menu button:focus-visible{outline:1px solid #222;outline-offset:-2px}@media(max-width:767px){.ds-menu button{min-height:44px;padding:8px 12px;font-size:12px}}"
+    },
+    {
+      "name": "Presence Badge",
+      "kind": "chip",
+      "description": "Color status marker paired with a readable text label.",
+      "html": "<span class=\"ds-presence\"><i></i>線上</span>",
+      "css": ".ds-presence{display:inline-flex;align-items:center;gap:6px;color:#222;font:12px 'Segoe UI',Tahoma,sans-serif}.ds-presence i{display:block;width:14px;height:14px;border:1px solid #fff;border-radius:50%;background:#4CAF50;box-shadow:0 1px 2px rgba(0,0,0,.3)}@media(max-width:767px){.ds-presence{min-height:44px;font-size:14px}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "掌心即時通",
+    "overview": "Yaroo! 把 2000 年代桌面即時通的觸感放進掌心，而不是把桌面截圖縮小。紫色漸層標題列、暖灰視窗背景、方正控制項、細邊框與結構性陰影共同建立 XP 視窗感；在手機直向環境中，整個 viewport 就是一扇視窗，聯絡人與聊天透過堆疊式導覽切換。這套系統保持懷舊、俏皮、直接，但不犧牲現代觸控品質。",
+    "keyCharacteristics": [
+      "紫色 XP 標題列是最強識別，黃色只標示品牌與主要動作。",
+      "暖灰視窗、白色內容面板、細邊框形成清楚的桌面軟體層級。",
+      "小圓角、內凹控制項與短距離陰影提供真實的按壓感。",
+      "手機直向以單一全螢幕視窗與堆疊導覽取代拖曳、重疊多視窗。",
+      "動態只傳達狀態；Buzz 尊重 reduced motion，不以劇烈搖晃作為唯一回饋。"
+    ],
+    "rules": [
+      { "name": "The Purple Titlebar Rule", "body": "紫色必須集中在視窗標題、焦點與品牌辨識；不得將所有容器都塗成紫色。", "section": "colors" },
+      { "name": "The Yellow Signal Rule", "body": "黃色只表示 Logo、主要動作或短暫提示；同一畫面不得有多個互相競爭的黃色區塊。", "section": "colors" },
+      { "name": "The Chrome–Content Split", "body": "視窗 chrome 可維持 11–14px 的桌面密度；手機主要內容一律至少 16px，禁止為了懷舊而犧牲可讀性。", "section": "typography" },
+      { "name": "The Structural Shadow Rule", "body": "陰影只能說明視窗、凸起按鈕或內凹欄位的結構；禁止用大範圍柔光把容器裝飾成現代卡片。", "section": "elevation" }
+    ],
+    "dos": [
+      "Do 讓手機 viewport 成為一扇完整 XP 視窗，並以堆疊導覽連接聯絡人與聊天。",
+      "Do 保留 Messenger Purple、Deep Titlebar Purple、Yaroo Signal Yellow 與暖灰視窗背景的既有角色。",
+      "Do 讓手機主要內容至少 16px、主要觸控目標至少 44×44px，並處理 safe-area inset。",
+      "Do 讓 Buzz 同時提供視覺、文字或聲音回饋；在 reduced motion 下取消劇烈位移。",
+      "Do 讓 demo 繼續由 mock data 驅動，所有互動都能在沒有 backend 的情況下展示。"
+    ],
+    "donts": [
+      "Don't 將手機版設計成 LINE、WhatsApp 或其他一般現代聊天 App 的外觀。",
+      "Don't 使用大型圓角卡片、極簡無邊框介面或現代原生導覽取代 Yaroo! 的紫黃品牌、XP 視窗框架與桌面軟體語彙。",
+      "Don't 把固定尺寸桌面視窗等比例縮小後塞進 viewport，或在手機保留拖曳、重疊與任意定位。",
+      "Don't 隱藏登入、聯絡人、聊天、訊息輸入或 Buzz 等核心功能來換取版面空間。",
+      "Don't 依賴 hover、顏色或劇烈搖晃作為唯一的操作與狀態提示。"
+    ]
+  }
+}
