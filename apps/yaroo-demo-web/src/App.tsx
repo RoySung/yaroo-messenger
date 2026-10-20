@@ -3,6 +3,7 @@ import LoginScreen from './components/LoginScreen';
 import MainMessenger from './components/MainMessenger';
 import ChatWindow from './components/ChatWindow';
 import { User, currentUser as defaultUser } from './mockData';
+import { usePhonePortrait } from './hooks/usePhonePortrait';
 
 interface BuzzRequest {
   id: number;
@@ -10,6 +11,7 @@ interface BuzzRequest {
 }
 
 function App() {
+  const isPhonePortrait = usePhonePortrait();
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [activeChats, setActiveChats] = useState<User[]>([]);
   const [zIndices, setZIndices] = useState<Record<string, number>>({ main: 10 });
@@ -52,12 +54,14 @@ function App() {
     setBuzzRequest({ contactId: contact.id, id: ++buzzRequestId.current });
   };
 
+  const handleBackToContacts = () => {
+    setActiveWindowId('main');
+  };
+
   const handleCloseChat = (contactId: string) => {
     setActiveChats(prev => prev.filter(c => c.id !== contactId));
     setBuzzRequest(request => request?.contactId === contactId ? null : request);
-    if (activeWindowId === `chat-${contactId}`) {
-      setActiveWindowId('main');
-    }
+    setActiveWindowId(current => current === `chat-${contactId}` ? 'main' : current);
   };
 
   useEffect(() => {
@@ -80,41 +84,60 @@ function App() {
   }, [activeChats, activeWindowId]);
 
   return (
-    <div className="w-full h-full relative overflow-hidden">
+    <div
+      className="demo-app-shell"
+      data-layout={isPhonePortrait ? 'phone-portrait' : 'desktop'}
+    >
       {!currentUser ? (
-        <LoginScreen onLogin={handleLogin} />
+        <LoginScreen onLogin={handleLogin} isPhonePortrait={isPhonePortrait} />
       ) : (
         <>
-          <MainMessenger 
-            user={currentUser} 
-            onOpenChat={handleOpenChat}
-            onRequestBuzz={handleRequestBuzz}
-            onUpdateUser={handleUpdateUser}
-            zIndex={zIndices['main'] || 10}
-            onFocus={() => bringToFront('main')}
-          />
+          <div
+            aria-hidden={isPhonePortrait && activeWindowId !== 'main'}
+            style={{ display: isPhonePortrait && activeWindowId !== 'main' ? 'none' : 'contents' }}
+          >
+            <MainMessenger
+              user={currentUser}
+              onOpenChat={handleOpenChat}
+              onRequestBuzz={handleRequestBuzz}
+              onUpdateUser={handleUpdateUser}
+              zIndex={zIndices['main'] || 10}
+              onFocus={() => bringToFront('main')}
+              isPhonePortrait={isPhonePortrait}
+            />
+          </div>
           {activeChats.map((contact, index) => {
+            const chatWindowId = `chat-${contact.id}`;
+            const isHiddenOnPhone = isPhonePortrait && activeWindowId !== chatWindowId;
+
             const messengerX = typeof window !== 'undefined' ? Math.max(20, window.innerWidth - 340) : 800;
             const defaultChatX = Math.max(20, messengerX - 560 + (index % 5) * 30);
             const defaultChatY = Math.min(typeof window !== 'undefined' ? window.innerHeight - 500 : 400, 40 + (index % 5) * 30);
 
             return (
-              <ChatWindow 
-                key={contact.id} 
-                contact={contact} 
-                user={currentUser}
-                onClose={() => handleCloseChat(contact.id)} 
-                zIndex={zIndices[`chat-${contact.id}`] || (11 + index)}
-                onFocus={() => bringToFront(`chat-${contact.id}`)}
-                buzzRequest={buzzRequest?.contactId === contact.id ? buzzRequest : null}
-                onBuzzHandled={(requestId) => {
-                  setBuzzRequest(request => request?.id === requestId ? null : request);
-                }}
-                initialPosition={{
-                  x: defaultChatX,
-                  y: defaultChatY
-                }}
-              />
+              <div
+                key={contact.id}
+                aria-hidden={isHiddenOnPhone}
+                style={{ display: isHiddenOnPhone ? 'none' : 'contents' }}
+              >
+                <ChatWindow
+                  contact={contact}
+                  user={currentUser}
+                  onClose={() => handleCloseChat(contact.id)}
+                  onBack={handleBackToContacts}
+                  isPhonePortrait={isPhonePortrait}
+                  zIndex={zIndices[chatWindowId] || (11 + index)}
+                  onFocus={() => bringToFront(chatWindowId)}
+                  buzzRequest={buzzRequest?.contactId === contact.id ? buzzRequest : null}
+                  onBuzzHandled={(requestId) => {
+                    setBuzzRequest(request => request?.id === requestId ? null : request);
+                  }}
+                  initialPosition={{
+                    x: defaultChatX,
+                    y: defaultChatY
+                  }}
+                />
+              </div>
             );
           })}
         </>

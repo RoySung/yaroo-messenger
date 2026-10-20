@@ -7,12 +7,21 @@ interface MainMessengerProps {
   onOpenChat: (contact: User) => void;
   onRequestBuzz: (contact: User) => void;
   onUpdateUser: (updatedData: Partial<User>) => void;
+  isPhonePortrait: boolean;
   zIndex?: number;
   onFocus: () => void;
   initialPosition?: { x: number; y: number };
 }
 
-export const MainMessenger = ({ user, onOpenChat, onRequestBuzz, onUpdateUser, zIndex = 10, onFocus, initialPosition }: MainMessengerProps) => {
+const presenceLabels: Record<UserStatus, string> = {
+  available: '線上',
+  busy: '忙碌',
+  away: '馬上回來',
+  offline: '離線',
+  invisible: '隱藏'
+};
+
+export const MainMessenger = ({ user, onOpenChat, onRequestBuzz, onUpdateUser, isPhonePortrait, zIndex = 10, onFocus, initialPosition }: MainMessengerProps) => {
   const defaultInitialPos = typeof window !== 'undefined'
     ? { x: Math.max(20, window.innerWidth - 340), y: 40 }
     : { x: 800, y: 40 };
@@ -77,17 +86,19 @@ export const MainMessenger = ({ user, onOpenChat, onRequestBuzz, onUpdateUser, z
 
   return (
     <Window 
-      className="w-[300px] h-[560px] bg-yr-bg flex flex-col absolute"
-      style={{ left: `${position.x}px`, top: `${position.y}px`, zIndex }}
-      onMouseDown={onFocus}
+      className="demo-window demo-main-window w-[300px] h-[560px] min-w-0 min-h-0 max-w-full bg-yr-bg flex flex-col absolute overflow-hidden"
+      style={isPhonePortrait
+        ? { zIndex }
+        : { left: `${position.x}px`, top: `${position.y}px`, zIndex }}
+      onMouseDown={isPhonePortrait ? undefined : onFocus}
     >
       <WindowHeader 
         title="Yaroo! 即時通" 
         logoSrc="/yaroo-logo.svg" 
-        onMouseDown={handleMouseDown}
-        onMinimize={() => {}}
-        onMaximize={() => {}}
-        onClose={() => {}}
+        onMouseDown={isPhonePortrait ? undefined : handleMouseDown}
+        onMinimize={isPhonePortrait ? undefined : () => {}}
+        onMaximize={isPhonePortrait ? undefined : () => {}}
+        onClose={isPhonePortrait ? undefined : () => {}}
       />
 
       <MenuBar 
@@ -152,10 +163,16 @@ export const MainMessenger = ({ user, onOpenChat, onRequestBuzz, onUpdateUser, z
       />
 
       {/* User Profile Card */}
-      <div className="px-yr-3 py-yr-2.5 flex items-start gap-yr-2.5 border-b border-yr-border bg-[linear-gradient(to_bottom,#FFFFFF_0%,#F5F3EC_100%)] shadow-[inset_0_1px_0_#FFF]">
+      <div className="demo-main-profile px-yr-3 py-yr-2.5 flex min-w-0 shrink-0 items-start gap-yr-2.5 overflow-hidden border-b border-yr-border bg-[linear-gradient(to_bottom,#FFFFFF_0%,#F5F3EC_100%)] shadow-[inset_0_1px_0_#FFF]">
         <div className="relative w-[52px] h-[52px] shrink-0">
           <Avatar size="md" src={user.avatar || '/avatars/cat_roy.svg'} alt={user.nickname} />
-          <StatusBadge status={currentPresence} size="sm" className="absolute -bottom-[2px] -right-[2px]" />
+          <StatusBadge
+            status={currentPresence}
+            size="sm"
+            className="absolute -bottom-[2px] -right-[2px]"
+            role="img"
+            aria-label={`目前狀態：${presenceLabels[currentPresence]}`}
+          />
         </div>
 
         <div className="flex flex-col gap-[3px] flex-1 min-w-0">
@@ -211,6 +228,7 @@ export const MainMessenger = ({ user, onOpenChat, onRequestBuzz, onUpdateUser, z
               className="w-full text-yr-sm" 
               value={currentPresence}
               onChange={handlePresenceChange}
+              aria-label="目前狀態"
               options={[
                 { value: 'available', label: '🟢 線上 (Available)' },
                 { value: 'busy', label: '🔴 忙碌 (Busy)' },
@@ -222,7 +240,7 @@ export const MainMessenger = ({ user, onOpenChat, onRequestBuzz, onUpdateUser, z
         </div>
       </div>
 
-      <Toolbar className="gap-[4px]">
+      <Toolbar className="max-w-full shrink-0 gap-[4px] overflow-x-auto">
         {['➕', '✉️', '📞', '🔍', '👤'].map((icon, i) => (
           <button key={i} className="w-[26px] h-[24px] bg-transparent border border-transparent rounded-[3px] flex justify-center items-center text-[14px] transition-all duration-100 hover:bg-[linear-gradient(to_bottom,#FFFFFF_0%,#E8E4D8_100%)] hover:border-[#707070] hover:shadow-[0_1px_2px_rgba(0,0,0,0.1)] active:bg-[#D4D0C8] active:border-[#555] active:shadow-[inset_1px_1px_2px_rgba(0,0,0,0.2)]">
             {icon}
@@ -231,7 +249,7 @@ export const MainMessenger = ({ user, onOpenChat, onRequestBuzz, onUpdateUser, z
       </Toolbar>
 
       {/* Contacts List */}
-      <div className="flex-1 overflow-y-auto bg-white border-b border-yr-border">
+      <div className="demo-contact-list min-w-0 min-h-0 flex-1 overflow-x-hidden overflow-y-auto bg-white border-b border-yr-border">
         {contacts.map(group => (
           <div key={group.group} className="mb-[2px]">
             <div 
@@ -245,13 +263,15 @@ export const MainMessenger = ({ user, onOpenChat, onRequestBuzz, onUpdateUser, z
             {expandedGroups[group.group] && (
               <div className="bg-white">
                 {group.users.map(contact => (
-                  <div 
+                  <button
+                    type="button"
                     key={contact.id} 
-                    className={`flex items-center px-yr-2 py-yr-1 cursor-pointer gap-[7px] border-b border-[#F3F3F3] transition-colors duration-100 hover:bg-yr-hover-bg active:bg-[#FFE680] ${contact.status === 'offline' ? 'opacity-65 hover:opacity-95' : ''}`}
+                    className={`demo-contact-row flex w-full min-w-0 items-center px-yr-2 py-yr-1 text-left cursor-pointer gap-[7px] border-0 border-b border-[#F3F3F3] bg-white transition-colors duration-100 hover:bg-yr-hover-bg active:bg-[#FFE680] ${isPhonePortrait ? 'min-h-[44px]' : ''} ${contact.status === 'offline' ? 'opacity-65 hover:opacity-95' : ''}`}
                     onClick={() => onOpenChat(contact)}
                     title={`點擊與 ${contact.nickname} 聊天`}
+                    aria-label={`${contact.nickname}，${presenceLabels[contact.status]}${contact.message ? `，${contact.message}` : ''}`}
                   >
-                    <StatusBadge status={contact.status} size="sm" className="shrink-0" />
+                    <StatusBadge status={contact.status} size="sm" className="shrink-0" aria-hidden="true" />
                     <Avatar size="sm" src={contact.avatar} alt={contact.nickname} />
                     <div className="flex flex-col min-w-0 flex-1">
                       <span className="text-yr-base font-semibold text-[#222] whitespace-nowrap overflow-hidden text-ellipsis">{contact.nickname}</span>
@@ -261,7 +281,7 @@ export const MainMessenger = ({ user, onOpenChat, onRequestBuzz, onUpdateUser, z
                         </span>
                       )}
                     </div>
-                  </div>
+                  </button>
                 ))}
               </div>
             )}
@@ -270,7 +290,7 @@ export const MainMessenger = ({ user, onOpenChat, onRequestBuzz, onUpdateUser, z
       </div>
 
       {/* Messenger Status Footer */}
-      <div className="px-yr-2 py-[3px] bg-yr-bg flex justify-between items-center text-[10px] text-[#666] border-t border-[#D4D0C8]">
+      <div className="px-yr-2 py-[3px] bg-yr-bg flex min-w-0 shrink-0 justify-between items-center gap-yr-2 overflow-hidden text-[10px] text-[#666] border-t border-[#D4D0C8]">
         <span>線上人數：{onlineContacts} / {totalContacts}</span>
         <span className="font-bold text-yr-purple">Yaroo! 台灣</span>
       </div>
