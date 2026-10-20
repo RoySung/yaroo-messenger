@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { ChangeEvent } from 'react';
 import type { Ack, OnlineUser, SessionJoinPayload } from '@yaroo/chat-protocol';
-import { Window, WindowHeader, TextInput, Checkbox, XpButton, useDraggable } from '@yaroo/ui';
+import { Window, WindowHeader, TextInput, XpButton, useDraggable } from '@yaroo/ui';
 
 export type LoginRequest = SessionJoinPayload;
 
@@ -14,7 +14,6 @@ interface LoginScreenProps {
 export const LoginScreen = ({ onLogin, initialError = null, isPhonePortrait = false }: LoginScreenProps) => {
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
-  const [invisible, setInvisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(initialError);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -38,7 +37,7 @@ export const LoginScreen = ({ onLogin, initialError = null, isPhonePortrait = fa
     try {
       const acknowledgment = await onLogin({
         nickname,
-        initialPresence: invisible ? 'invisible' : 'available',
+        initialPresence: 'available',
       });
 
       if (!acknowledgment.ok) {
@@ -112,16 +111,6 @@ export const LoginScreen = ({ onLogin, initialError = null, isPhonePortrait = fa
                 : 'chat-login-input text-[13px] text-[#111]'}
             />
             <p className="text-[11px] leading-[1.35] text-[#555]">此欄僅供介面展示，不會記錄、傳送或用於登入。</p>
-          </div>
-
-          <div className={isPhonePortrait ? 'flex flex-col gap-0 mt-yr-1' : 'flex flex-col gap-yr-2 mt-yr-1 py-yr-1'}>
-            <Checkbox
-              checked={invisible}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => setInvisible(e.target.checked)}
-              className={isPhonePortrait ? "chat-login-checkbox min-h-[44px] w-full [&>input]:shrink-0 [&>input:focus-visible]:outline-2 [&>input:focus-visible]:outline-offset-2 [&>input:focus-visible]:outline-yr-purple [&>span]:text-[14px]" : ''}
-            >
-              以隱藏模式登入
-            </Checkbox>
           </div>
 
           {errorMessage && (
