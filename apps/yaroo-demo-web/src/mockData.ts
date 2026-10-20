@@ -1,3 +1,5 @@
+import { publicAsset } from "./publicAsset";
+
 export type UserStatus =
   | "available"
   | "busy"
@@ -33,7 +35,7 @@ export const currentUser: User = {
   nickname: "羅伊 ฅ^•ﻌ•^ฅ",
   status: "available", // available, busy, away, invisible
   customStatus: "RO 中，勿擾 ⚔️ (ง •̀_•́)ง",
-  avatar: "/avatars/cat_roy.svg",
+  avatar: publicAsset("avatars/cat_roy.svg"),
 };
 
 export const contacts: ContactGroup[] = [
@@ -45,21 +47,21 @@ export const contacts: ContactGroup[] = [
         nickname: "貝貝 (・∀・)",
         status: "available",
         message: "下課有人要衝網咖嗎～ (*´∀`)~♥",
-        avatar: "/avatars/cat_golden.svg",
+        avatar: publicAsset("avatars/cat_golden.svg"),
       },
       {
         id: "yingjun",
         nickname: "英菌 (´･ω･`)",
         status: "offline",
         message: "離線中，有事請留悄悄話 (´･ω･`)zzZ",
-        avatar: "/avatars/cat_nine.svg",
+        avatar: publicAsset("avatars/cat_nine.svg"),
       },
       {
         id: "delicious_burger",
         nickname: "美味謝堡 (◕‿◕✿)",
         status: "busy",
         message: "♪ 寂寞邊界 - 張棟樑 ♪ (つД`)",
-        avatar: "/avatars/cat_hsuan.svg",
+        avatar: publicAsset("avatars/cat_hsuan.svg"),
       },
     ],
   },
@@ -71,21 +73,21 @@ export const contacts: ContactGroup[] = [
         nickname: "Tom (ง •̀_•́)ง",
         status: "available",
         message: "今晚段考衝刺中！(ง •̀_•́)ง",
-        avatar: "/avatars/cat_kai.svg",
+        avatar: publicAsset("avatars/cat_kai.svg"),
       },
       {
         id: "dongdong",
         nickname: "東東 (⁎⁍̴̛ᴗ⁍̴̛⁎)",
         status: "busy",
         message: '補習班上課中 勿敲 >"< (｡ŏ_ŏ)',
-        avatar: "/avatars/cat_meatball.svg",
+        avatar: publicAsset("avatars/cat_meatball.svg"),
       },
       {
         id: "xiaohua",
         nickname: "小華 (｡♥‿♥｡)",
         status: "offline",
         message: "放假想去淡水老街吃阿給 ٩(◕‿◕｡)۶",
-        avatar: "/avatars/cat_candy.svg",
+        avatar: publicAsset("avatars/cat_candy.svg"),
       },
     ],
   },
@@ -97,14 +99,14 @@ export const contacts: ContactGroup[] = [
         nickname: "妞妞 (≧▽≦)",
         status: "offline",
         message: "等候對方接受邀請 (｡･ω･｡)",
-        avatar: "/avatars/cat_ann.svg",
+        avatar: publicAsset("avatars/cat_ann.svg"),
       },
       {
         id: "zewan",
         nickname: "澤丸 (¬‿¬)",
         status: "offline",
         message: "等候對方接受邀請 (¬‿¬)",
-        avatar: "/avatars/cat_patrick.svg",
+        avatar: publicAsset("avatars/cat_patrick.svg"),
       },
     ],
   },

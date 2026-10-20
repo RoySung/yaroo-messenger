@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { User, UserStatus, contacts as initialContacts } from '../mockData';
+import { publicAsset } from '../publicAsset';
 import { Window, WindowHeader, Avatar, StatusBadge, Toolbar, MenuBar, Select, useDraggable } from '@yaroo/ui';
 
 interface MainMessengerProps {
@@ -94,7 +95,7 @@ export const MainMessenger = ({ user, onOpenChat, onRequestBuzz, onUpdateUser, i
     >
       <WindowHeader 
         title="Yaroo! 即時通" 
-        logoSrc="/yaroo-logo.svg" 
+        logoSrc={publicAsset('yaroo-logo.svg')}
         onMouseDown={isPhonePortrait ? undefined : handleMouseDown}
         onMinimize={isPhonePortrait ? undefined : () => {}}
         onMaximize={isPhonePortrait ? undefined : () => {}}
@@ -165,7 +166,7 @@ export const MainMessenger = ({ user, onOpenChat, onRequestBuzz, onUpdateUser, i
       {/* User Profile Card */}
       <div className="demo-main-profile px-yr-3 py-yr-2.5 flex min-w-0 shrink-0 items-start gap-yr-2.5 overflow-hidden border-b border-yr-border bg-[linear-gradient(to_bottom,#FFFFFF_0%,#F5F3EC_100%)] shadow-[inset_0_1px_0_#FFF]">
         <div className="relative w-[52px] h-[52px] shrink-0">
-          <Avatar size="md" src={user.avatar || '/avatars/cat_roy.svg'} alt={user.nickname} />
+          <Avatar size="md" src={user.avatar || publicAsset('avatars/cat_roy.svg')} alt={user.nickname} />
           <StatusBadge
             status={currentPresence}
             size="sm"

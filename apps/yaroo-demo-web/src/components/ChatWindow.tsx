@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { User, chatHistory as initialChatHistory } from '../mockData';
+import { publicAsset } from '../publicAsset';
 import { Window, WindowHeader, Avatar, Toolbar, MenuBar, XpButton, TextArea, useDraggable } from '@yaroo/ui';
 
 interface ChatWindowProps {
@@ -322,7 +323,7 @@ export const ChatWindow = ({ contact, user, onClose, onBack, isPhonePortrait, zI
       {/* Window Header */}
       <WindowHeader 
         title={`${contact.nickname} (${contact.id}) - Yaroo! 即時通`}
-        logoSrc="/yaroo-logo.svg" 
+        logoSrc={publicAsset('yaroo-logo.svg')}
         onMouseDown={isPhonePortrait ? undefined : handleMouseDown}
         onMinimize={isPhonePortrait ? undefined : () => {}}
         onMaximize={isPhonePortrait ? undefined : () => {}}
@@ -517,7 +518,7 @@ export const ChatWindow = ({ contact, user, onClose, onBack, isPhonePortrait, zI
           )}
 
           <div className="mt-auto opacity-80">
-            <img src="/yaroo-logo.svg" alt="Yaroo!" style={{ width: '64px' }} />
+            <img src={publicAsset('yaroo-logo.svg')} alt="Yaroo!" style={{ width: '64px' }} />
           </div>
         </div>}
       </div>

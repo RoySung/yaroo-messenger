@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { User, currentUser } from '../mockData';
+import { publicAsset } from '../publicAsset';
 import { Window, WindowHeader, TextInput, Checkbox, XpButton, useDraggable } from '@yaroo/ui';
 
 interface LoginScreenProps {
@@ -36,7 +37,7 @@ export const LoginScreen = ({ onLogin, isPhonePortrait }: LoginScreenProps) => {
     >
       <WindowHeader 
         title="Yaroo! 即時通 - 登入" 
-        logoSrc="/yaroo-logo.svg" 
+        logoSrc={publicAsset('yaroo-logo.svg')}
         onMouseDown={isPhonePortrait ? undefined : handleMouseDown}
         onMinimize={isPhonePortrait ? undefined : () => {}}
         onMaximize={isPhonePortrait ? undefined : () => {}}
@@ -50,7 +51,7 @@ export const LoginScreen = ({ onLogin, isPhonePortrait }: LoginScreenProps) => {
           ? 'flex justify-center items-center my-[4px] mb-[12px] w-full shrink-0'
           : 'flex justify-center items-center my-[10px] mb-[24px] w-full'}>
           <img 
-            src="/yaroo-logo.svg" 
+            src={publicAsset('yaroo-logo.svg')}
             alt="Yaroo! Messenger" 
             className={isPhonePortrait
               ? 'w-[180px] h-auto max-h-[76px] drop-shadow-[0_3px_6px_rgba(0,0,0,0.2)]'
