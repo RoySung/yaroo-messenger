@@ -1,0 +1,24 @@
+## 1. Responsive Foundation
+
+- [x] 1.1 Implement **Detect phone portrait with a single app-owned media query** by adding `usePhonePortrait(): boolean` in `apps/yaroo-demo-web/src/hooks/usePhonePortrait.ts`, subscribing and cleaning up the exact `(max-width: 767px) and (orientation: portrait)` query, and enabling `viewport-fit=cover` in `apps/yaroo-demo-web/index.html`; verify **Phone portrait mode has a deterministic activation boundary** by resizing from 375x667 to 667x375 without a reload and observing the hook result change while active chat state remains intact.
+- [x] [P] 1.2 Implement **Turn windows into full-viewport surfaces without changing shared UI** in `apps/yaroo-demo-web/src/app.css` with an app-owned phone-portrait section that uses `100vh` fallback plus `100dvh`, safe-area insets, zero mobile window shadow/radius, contained overflow, and no horizontal document scroll; verify **Mobile surfaces fill the available viewport** and **Mobile layout respects dynamic viewport and safe areas** by inspecting login and chat at 320x568 and 430x932 with simulated non-zero safe-area values.
+
+## 2. Navigation Contract
+
+- [x] 2.1 Implement **Model mobile navigation in App state** in `apps/yaroo-demo-web/src/App.tsx` so phone portrait shows either the main list or exactly one `chat-<contactId>`, back returns to `main` without deleting conversation state, close removes the active chat, and desktop still mounts all open chats; verify **Mobile navigation uses a list-to-chat stack** by sending a message to 貝貝, returning, reopening 貝貝, opening Tom, and closing Tom while checking the specified retained and removed state.
+
+## 3. Screen Adaptation
+
+- [x] [P] 3.1 Implement the login portion of **Reflow each screen around touch and safe-area constraints** in `apps/yaroo-demo-web/src/components/LoginScreen.tsx`, disabling drag in phone portrait and making the full form vertically reachable with 16px fields and 44x44 primary controls; verify at 320x568 by reaching every checkbox, link, and sign-in action without horizontal clipping.
+- [x] [P] 3.2 Implement the contact-list portion of **Reflow each screen around touch and safe-area constraints** in `apps/yaroo-demo-web/src/components/MainMessenger.tsx`, disabling drag in phone portrait, filling the viewport, retaining identity/status context, and expanding each contact row to a 44px minimum target; verify at 320x568, 375x667, and 430x932 by opening the first and last visible contact through touch-sized rows with no page-level horizontal overflow.
+- [x] [P] 3.3 Implement the chat portion of **Reflow each screen around touch and safe-area constraints** in `apps/yaroo-demo-web/src/components/ChatWindow.tsx`, adding the explicit mobile back action, replacing the 145px sidebar with a compact identity region, containing menu/toolbar overflow, and keeping the 16px composer above the bottom safe area; verify **Mobile chat reflows secondary information** and **Core demo interactions remain directly operable** at 320x568 by opening emoji controls, inserting an emoji, sending a message, triggering Buzz, and confirming disabled actions do not displace the composer.
+
+## 4. Motion and Accessibility
+
+- [x] 4.1 Implement **Preserve Buzz feedback with reduced-motion fallback** in `apps/yaroo-demo-web/src/components/ChatWindow.tsx` and `apps/yaroo-demo-web/src/app.css` so standard phone Buzz stays within the viewport and reduced motion uses non-positional emphasis while retaining the Buzz message and available audio; verify **Buzz provides a reduced-motion-safe mobile response** by comparing normal and `prefers-reduced-motion: reduce` runs at 375x667 and asserting the reduced-motion window and page position do not change.
+- [x] 4.2 Complete cross-screen mobile accessibility styling in `apps/yaroo-demo-web/src/app.css` and the three screen components so login, contact rows, back, send, emoji, and Buzz meet 44x44px, message/input text is at least 16px, focus is visible, and presence includes a text or accessible label; verify **Mobile content and controls meet touch accessibility baselines** through computed-size and focus assertions at 320, 375, and 430px widths.
+
+## 5. Verification and Regression
+
+- [x] 5.1 Run `pnpm --filter @yaroo/demo-web build` and fix only change-scoped TypeScript or CSS build failures until the command exits zero, proving the responsive implementation compiles without adding a new test dependency.
+- [x] 5.2 Execute **Verify fixed portrait widths and desktop regression widths** with the documented browser flow at 320x568, 375x667, 430x932, 1024x768, and 1440x900; record assertions for no phone horizontal overflow, reachable focused composer, retained mobile conversations, 44x44px targets, and reduced-motion Buzz, then verify **Desktop behavior remains unchanged** by opening, dragging, overlapping, and focusing 貝貝 and Tom at both desktop sizes.
