@@ -17,7 +17,10 @@ import {
 } from '@yaroo/chat-protocol';
 import { getChatClient, type ChatClient } from './chatClient';
 import { usePhonePortrait } from './hooks/usePhonePortrait';
-import type { ChatTimelineItem } from './types/chatTypes';
+import {
+  appendTimelineItem as appendBoundedTimelineItem,
+  type ChatTimelineItem,
+} from './types/chatTypes';
 import type { User } from './types/userTypes';
 
 interface BuzzRequest {
@@ -85,10 +88,11 @@ function App() {
   const appendTimelineItem = (peerSessionId: string, item: ChatTimelineItem) => {
     setTimelineByPeer(current => {
       const timeline = current[peerSessionId] ?? [];
-      if (timeline.some(existing => existing.data.id === item.data.id)) {
+      const nextTimeline = appendBoundedTimelineItem(timeline, item);
+      if (nextTimeline === timeline) {
         return current;
       }
-      return { ...current, [peerSessionId]: [...timeline, item] };
+      return { ...current, [peerSessionId]: nextTimeline };
     });
   };
 

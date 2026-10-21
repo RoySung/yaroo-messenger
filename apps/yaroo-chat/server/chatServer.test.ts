@@ -182,14 +182,31 @@ const assertError = <T>(ack: Ack<T>, code: string): void => {
   }
 };
 
-test('configuration defaults to port 3000 and rejects invalid ports', () => {
-  assert.deepEqual(readChatServerConfig({}), { port: 3_000 });
-  assert.deepEqual(readChatServerConfig({ PORT: ' 4100 ' }), { port: 4_100 });
+test('configuration uses safe host defaults and rejects invalid values', () => {
+  assert.deepEqual(readChatServerConfig({}), {
+    port: 3_000,
+    hostname: '127.0.0.1',
+  });
+  assert.deepEqual(
+    readChatServerConfig({ PORT: ' 4100 ', HOST: ' 0.0.0.0 ' }),
+    { port: 4_100, hostname: '0.0.0.0' },
+  );
+  assert.deepEqual(readChatServerConfig({}, '0.0.0.0'), {
+    port: 3_000,
+    hostname: '0.0.0.0',
+  });
 
   for (const port of ['', '0', '-1', '3.14', '65536', 'not-a-port']) {
     assert.throws(
       () => readChatServerConfig({ PORT: port }),
       /PORT must be an integer/,
+    );
+  }
+
+  for (const hostname of ['', 'https://example.test', 'host/path', 'host name']) {
+    assert.throws(
+      () => readChatServerConfig({ HOST: hostname }),
+      /HOST must be a hostname or IP address without a URL scheme or path/,
     );
   }
 });

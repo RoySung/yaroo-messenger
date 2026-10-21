@@ -20,6 +20,7 @@ import {
 import { Server } from 'socket.io';
 
 const DEFAULT_PORT = 3_000;
+const DEFAULT_HOSTNAME = '127.0.0.1';
 const attachedHttpServers = new WeakSet<HttpServer>();
 
 type Clock = () => number;
@@ -31,9 +32,11 @@ interface JoinedSession extends OnlineUser {
 
 export interface ChatServerConfig {
   port: number;
+  hostname: string;
 }
 
 interface ChatServerEnvironment {
+  readonly HOST?: string;
   readonly PORT?: string;
   readonly [key: string]: string | undefined;
 }
@@ -104,10 +107,31 @@ const parsePort = (configuredPort: string | undefined): number => {
   return port;
 };
 
+const parseHostname = (
+  configuredHostname: string | undefined,
+  defaultHostname: string,
+): string => {
+  const hostname = (configuredHostname ?? defaultHostname).trim();
+  if (
+    hostname.length === 0 ||
+    hostname.length > 253 ||
+    hostname.includes('://') ||
+    /[\s/?#]/u.test(hostname)
+  ) {
+    throw new Error(
+      'HOST must be a hostname or IP address without a URL scheme or path.',
+    );
+  }
+
+  return hostname;
+};
+
 export const readChatServerConfig = (
   environment: ChatServerEnvironment = process.env,
+  defaultHostname = DEFAULT_HOSTNAME,
 ): ChatServerConfig => ({
   port: parsePort(environment.PORT),
+  hostname: parseHostname(environment.HOST, defaultHostname),
 });
 
 export const attachChatServer = (

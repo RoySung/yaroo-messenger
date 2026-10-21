@@ -3,3 +3,6 @@ packages:
   - 'packages/*'
 allowBuilds:
   esbuild: true
+overrides:
+  engine.io: 6.6.10
+  source-map-js: 1.2.2

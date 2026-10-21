@@ -40,11 +40,15 @@ pnpm dev:chat
 ```
 
 The live chat application starts at [http://localhost:3000](http://localhost:3000).
-Use a different valid TCP port when needed:
+Development binds to `127.0.0.1` by default. Use a different valid TCP port or
+explicit host when needed:
 
 ```bash
 PORT=4000 pnpm dev:chat
+HOST=0.0.0.0 pnpm dev:chat
 ```
+
+Production start binds to `0.0.0.0` unless `HOST` is set.
 
 To run the static UI demo instead:
 

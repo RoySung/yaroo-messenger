@@ -65,7 +65,9 @@ Run commands from the repository root.
 | Test chat server behavior | `pnpm --filter @yaroo/chat test` |
 
 `@yaroo/chat` requires Node.js 20.9 or newer. It listens on port `3000` by
-default; set `PORT` to use another valid TCP port.
+default; set `PORT` to use another valid TCP port. Development binds to
+`127.0.0.1` by default, while production start binds to `0.0.0.0`; set `HOST`
+to choose another hostname or IP address explicitly.
 
 `pnpm dev:chat` starts the live Next.js and Socket.IO system. It is the target
 for work on real-time sessions, presence, messages, Buzz behavior, and server
