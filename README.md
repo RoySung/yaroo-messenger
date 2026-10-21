@@ -6,6 +6,14 @@ TypeScript pnpm monorepo, it reimagines that nostalgic experience as an
 anonymous real-time messenger and a static interface demo with a shared visual
 language. It is not affiliated with or endorsed by Yahoo.
 
+<p align="center">
+  <img src="chat_active_screenshot.png" alt="Yaroo! Messenger contact list and active chat window" width="100%">
+</p>
+
+Try the mock-data interface in the
+[live demo](https://roysung.github.io/yaroo-messenger/), or follow the setup
+instructions below to run the real-time messenger locally.
+
 ## What Is Included
 
 - Anonymous nickname sessions with random, reconnect-resumable cat avatars.
@@ -17,6 +25,16 @@ language. It is not affiliated with or endorsed by Yahoo.
 
 The live application keeps its sessions, messages, and cooldowns in memory. It
 does not currently provide accounts, persistence, or a database.
+
+## Screenshots
+
+| Sign in | Contact list |
+| --- | --- |
+| ![Yaroo! Messenger sign-in window](login_screen.png) | ![Yaroo! Messenger contact list](main_messenger_roy.png) |
+
+The screenshots show the static interface demo. The live application replaces
+the demo's mock contacts and conversations with anonymous, in-memory sessions
+and real-time Socket.IO events.
 
 ## Tech Stack
 
