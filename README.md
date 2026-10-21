@@ -10,6 +10,10 @@ language. It is not affiliated with or endorsed by Yahoo.
   <img src="chat_active_screenshot.png" alt="Yaroo! Messenger contact list and active chat window" width="100%">
 </p>
 
+Try the mock-data interface in the
+[live demo](https://roysung.github.io/yaroo-messenger/), or follow the setup
+instructions below to run the real-time messenger locally.
+
 ## What Is Included
 
 - Anonymous nickname sessions with random, reconnect-resumable cat avatars.
